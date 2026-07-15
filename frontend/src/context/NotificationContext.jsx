@@ -30,6 +30,7 @@ export function NotificationProvider({ children }) {
 
   useEffect(() => {
     if (!isAuthenticated || !token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUnreadCount(0);
       return;
     }

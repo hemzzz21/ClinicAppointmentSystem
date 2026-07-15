@@ -46,10 +46,4 @@ function SkeletonStats() {
   );
 }
 
-export { Skeleton as default, SkeletonCard, SkeletonStats };
-export { Skeleton as Skeleton };
-
-
-export { SkeletonCard }
-
-export { SkeletonStats }
+export { Skeleton as default, Skeleton as Skeleton, SkeletonCard, SkeletonStats };

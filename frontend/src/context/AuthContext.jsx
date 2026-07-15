@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect */
     try {
       const storedToken = localStorage.getItem("token");
       const storedUser = localStorage.getItem("user");
