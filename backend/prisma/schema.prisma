@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PATIENT
+  DOCTOR
+  ADMIN
+}
+
+enum SlotStatus {
+  AVAILABLE
+  BOOKED
+  CANCELLED
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum AppointmentType {
+  ONLINE
+  OFFLINE
+}
+
+enum PaymentStatus {
+  NOT_REQUIRED
+  PENDING
+  PAID
+  FAILED
+}
+
+enum NotificationChannel {
+  EMAIL
+  SMS
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMATION
+  REMINDER
+  CANCELLATION
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  phone        String?
+  role         Role
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  doctorProfile DoctorProfile?
+  profileImage  String?
+
+  patientAppointments Appointment[] @relation("PatientAppointments")
+  doctorAppointments  Appointment[] @relation("DoctorAppointments")
+
+  notifications Notification[]
+}
+
+model DoctorProfile {
+  id                  Int     @id @default(autoincrement())
+  specialization      String
+  qualification       String?
+  experienceYears     Int?
+  consultationFee     Float?
+  bio                 String?
+  clinicLocation      String?
+  slotDurationMinutes Int     @default(30)
+  isAvailable         Boolean @default(true)
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  slots AvailabilitySlot[]
+}
+
+model AvailabilitySlot {
+  id        Int        @id @default(autoincrement())
+  slotDate  DateTime
+  startTime DateTime
+  endTime   DateTime
+  status    SlotStatus @default(AVAILABLE)
+
+  doctorId Int
+  doctor   DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  appointment Appointment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Appointment {
+  id            Int               @id @default(autoincrement())
+  status        AppointmentStatus @default(PENDING)
+  type          AppointmentType   @default(OFFLINE)
+  paymentStatus PaymentStatus     @default(NOT_REQUIRED)
+  reason        String?
+  notes         String?
+  cancelReason  String?
+  meetingLink   String?
+  reportFile    String?
+
+  patientId Int
+  patient   User @relation("PatientAppointments", fields: [patientId], references: [id])
+
+  doctorId Int
+  doctor   User @relation("DoctorAppointments", fields: [doctorId], references: [id])
+
+  slotId Int              @unique
+  slot   AvailabilitySlot @relation(fields: [slotId], references: [id])
+
+  notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id        Int                  @id @default(autoincrement())
+  title   String @default("Notification")
+  message String @default("Notification details")
+  type      NotificationType
+  channel   NotificationChannel
+  priority  NotificationPriority @default(NORMAL)
+  isRead    Boolean              @default(false)
+  sentAt    DateTime?
+  createdAt DateTime             @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  appointmentId Int?
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+}
