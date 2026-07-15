@@ -10,13 +10,32 @@ export const bookAppointment = async (data) => {
   return response.data;
 };
 
-export const cancelAppointment = async (
-  appointmentId,
-  cancelReason
-) => {
+export const cancelAppointment = async (appointmentId, cancelReason) => {
   const response = await api.patch(
     `/appointments/${appointmentId}/cancel`,
     { cancelReason }
+  );
+
+  return response.data;
+};
+
+export const updateAppointmentStatus = async (appointmentId, status) => {
+  const response = await api.patch(
+    `/appointments/${appointmentId}/status`,
+    { status }
+  );
+
+  return response.data;
+};
+
+export const getDoctorStats = async () => {
+  const response = await api.get("/appointments/doctor/stats");
+  return response.data;
+};
+
+export const getAvailableSlots = async (doctorId) => {
+  const response = await api.get(
+    `/appointments/available-slots/${doctorId}`
   );
 
   return response.data;

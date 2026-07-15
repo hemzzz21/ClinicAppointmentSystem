@@ -5,12 +5,15 @@ import { Toaster } from "react-hot-toast";
 import "./index.css";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
+import { NotificationProvider } from "./context/NotificationContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <Toaster position="top-right" />
-      <App />
+      <NotificationProvider>
+        <Toaster position="top-right" />
+        <App />
+      </NotificationProvider>
     </AuthProvider>
   </StrictMode>
 );
