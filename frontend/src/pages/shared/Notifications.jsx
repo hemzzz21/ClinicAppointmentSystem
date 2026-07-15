@@ -13,7 +13,7 @@ import Button from "../../components/ui/Button";
 import Badge from "../../components/ui/Badge";
 import { Skeleton } from "../../components/ui/Skeleton";
 
-import { useNotifications } from "../../context/NotificationContext";
+import { useNotifications } from "../../context/useNotifications";
 import {
   getNotifications,
   markNotificationAsRead,

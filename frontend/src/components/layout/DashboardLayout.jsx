@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Bell, LogOut, Menu, Stethoscope } from "lucide-react";
 import toast from "react-hot-toast";
 
-import { useAuth } from "../../context/AuthContext";
-import { useNotifications } from "../../context/NotificationContext";
+import { useAuth } from "../../context/useAuth";
+import { useNotifications } from "../../context/useNotifications";
 import { ROLE_ICON, ROLE_LABEL, ROLE_NAV } from "./navConfig";
 import { initials } from "../../utils/format";
 

@@ -16,8 +16,8 @@ import StatCard from "../../components/ui/StatCard";
 import EmptyState from "../../components/ui/EmptyState";
 import { SkeletonStats, SkeletonCard } from "../../components/ui/Skeleton";
 
-import { useAuth } from "../../context/AuthContext";
-import { useNotifications } from "../../context/NotificationContext";
+import { useAuth } from "../../context/useAuth";
+import { useNotifications } from "../../context/useNotifications";
 import { getDoctors } from "../../services/doctor.service";
 import { getMyAppointments } from "../../services/appointment.service";
 import { formatDate, formatTime } from "../../utils/format";

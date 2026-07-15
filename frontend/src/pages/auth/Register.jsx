@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { registerUser } from "../../services/auth.service";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import Button from "../../components/ui/Button";
 import { Input } from "../../components/ui/Form";
 

@@ -7,7 +7,7 @@ import PageHeader from "../../components/layout/PageHeader";
 import Card from "../../components/ui/Card";
 import Badge from "../../components/ui/Badge";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import { uploadProfileImage } from "../../services/upload.service";
 import { initials } from "../../utils/format";
 
